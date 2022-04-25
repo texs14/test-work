@@ -1,0 +1,30 @@
+@mixin borderShadow {
+    background: #FFFEFB;
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+@mixin borderShadowHover {
+    background: #FFFEFB;
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.192), 0px 6px 10px rgba(0, 0, 0, 0.178);
+    border-radius: 4px;
+}
+
+
+@mixin mediumScreen {
+    @media screen and (max-width: 1460px){
+        @content;
+    }
+}
+
+@mixin smallScreen {
+    @media screen and (max-width: 1028px){
+        @content;
+    }
+}
+
+@mixin extraSmallScreen {
+    @media screen and (max-width: 360px){
+        @content;
+    }
+}
