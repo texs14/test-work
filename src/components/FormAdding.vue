@@ -109,7 +109,6 @@ export default {
                         target.nextSibling === null ? target.after(spanError) : target.nextSibling.innerText = errors.required
                         this.formValid.required.urlImg = false
                         target.classList.add('form__input_error')
-                        target.classList.remove('form__input_error')
                         break
                     case !regExp.test(urlImg):
                         spanError.innerText = errors.url
@@ -338,5 +337,6 @@ export default {
 
     position: absolute;
     bottom: 4px;
+    left: 0;
 }
 </style>

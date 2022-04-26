@@ -1,6 +1,11 @@
 export default {
     state: {
         cards: [],
+        sortCards: [],
+        sort: {
+            type: 'default',
+            direction: ''
+        },
         message: {
             text: '',
             state: '',
@@ -13,13 +18,19 @@ export default {
         },
         message(state) {
             return state.message
+        },
+        sortCards(state) {
+            return state.sortCards
+        },
+        sort(state) {
+            return state.sort
         }
     },
     actions: {
-        async fetchCards(ctx) {
+        fetchCards(ctx) {
             let cards = JSON.parse(localStorage.getItem('cards'))
             if(cards !== null) {
-                cards = await JSON.parse(localStorage.getItem('cards'))
+                cards = JSON.parse(localStorage.getItem('cards'))
                 ctx.commit('updateCards', cards)
             } else {
                 cards = [
@@ -61,25 +72,32 @@ export default {
                 ctx.commit('updateCards', cards) 
             }
         },
-        async postCard(ctx, card) {
+        postCard(ctx, card) {
             try {
                 const newCard = {...card}
                 ctx.commit('addCard', newCard)
+                ctx.commit('sort')
                 ctx.commit('showMessage', {message :'Карточка успешно добавлена', status: 'ok'})
             } catch (err) {
-                console.log('ERROR')
+                console.log('ERROR: ', err)
                 ctx.commit('showMessage', {message: 'Что-то пошло не так...', status: 'error'})
             }
+        },
+        sortCards(ctx, options) {
+            ctx.commit('updateSort', options)
+            ctx.commit('sort')
         }
     },
     mutations: {
         updateCards(state, cards) {
+            const newArr = cards
             localStorage.setItem('cards', JSON.stringify(cards))
-            state.cards = cards
+            state.cards = newArr
         },
         addCard(state, card) {
-            localStorage.setItem('cards', JSON.stringify([...state.cards, card]))
-            state.cards = [...state.cards, card]
+            const newArr = [...state.cards, card]
+            localStorage.setItem('cards', JSON.stringify(newArr))
+            state.cards = newArr
         },
         showMessage(state, {message, status}) {
             state.message = {
@@ -93,6 +111,49 @@ export default {
                 show: false, 
                 text: ''
             }
+        },
+        removeCard(state, id) {
+            const newArr = state.cards.filter(card => card.id !== id)
+            const newSortArr = state.sortCards.filter(card => card.id !== id)
+            state.cards = newArr
+            state.sortCards = newSortArr
+            localStorage.setItem('cards', JSON.stringify(state.cards))
+        },
+        updateSort(state, options) {
+            state.sort = {...options}
+        },
+        sort(state) {
+            const sortArr = [...state.cards]
+            if(state.sort.type !== 'default') {
+                sortArr.sort((a, b) => {
+                    let elA = state.sort.type === 'price' ? parseInt(String(a.price).replace(/\s+/g, '')) : String(a.name).toLowerCase()
+                    let elB = state.sort.type === 'price' ? parseInt(String(b.price).replace(/\s+/g, '')) : String(b.name).toLowerCase()
+    
+                    if(state.sort.direction === 'asc') {
+                        switch (true) {
+                            case elA < elB:
+                                return -1
+                            case elA > elB:
+                                return 1
+                            default:
+                                return 0
+                        }
+                    }
+    
+                    if(state.sort.direction === 'desc') {
+                        switch (true) {
+                            case elA < elB:
+                                return 1
+                            case elA > elB:
+                                return -1
+                            default:
+                                return 0
+                        }
+                    }
+                })
+            }
+            
+            state.sortCards = sortArr
         }
     }
 }

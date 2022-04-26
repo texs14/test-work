@@ -1,6 +1,7 @@
 <template>
     <transition-group name="list" tag="ul" class="cards-list">
-        <CardItem v-for="card  in cards" :key="card.id" :card="card"/>
+        <h2 v-if="cards.length === 0" key="h2">Список пока пуст. Добавьте товар</h2>
+                <CardItem v-for="card  in sort.type !== 'default' || sortCards.length ? sortCards : cards" :key="card.id" :card="card"/>
     </transition-group>
 </template>
 
@@ -12,19 +13,20 @@ export default {
     components: {
         CardItem
     },
-    data() {
-        return {
-        }
-    },
     mounted() {
         this.fetchCards()
     },
-    computed: mapGetters(['cards']),
+    computed: mapGetters(['cards', 'sortCards', 'sort']),
     methods: mapActions(['fetchCards'])
 }
 </script>
 
 <style lang="scss" scoped>
+    h2 {
+        position: absolute;
+        left: 50%;
+    }
+
     .list-item {
         display: inline-block;
         margin-right: 10px;
@@ -38,6 +40,11 @@ export default {
         gap: 16px;
         flex-wrap: wrap;
         max-width: 1028px;
+
+        @include smallScreen{
+            margin: auto;
+            max-width: 685px;
+        }
     }
 
     .card {
@@ -124,13 +131,5 @@ export default {
         }
     }
 
-    .list-enter-active, .list-leave-active {
-        transition: all 5s;
-        opacity: 1;
-        transform: translateX(0px);
-    }
-    .list-enter, .list-leave-to {
-        opacity: 0;
-        transform: translateX(30px);
-    }
+    
 </style>

@@ -1,6 +1,6 @@
 <template>
     <li class="card">
-        <span class="card__del"></span>
+        <span class="card__del" @click="removeCard(card.id)"></span>
         <img class="card__image" :src="card.urlImg" alt="изображение товара">
         <div class="card__info-block">
             <h3 class="card__title">{{card.name}}</h3>
@@ -11,20 +11,19 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
-    data() {
-        return {
-        }
-    },
     props: {
         card: Object
-    }
+    },
+    methods: mapMutations(['removeCard'])
 }
 </script>
 
 <style lang="scss" scoped>
     .list-enter-active, .list-leave-active {
-        transition: all 5s;
+        transition: all .35s;
         opacity: 1;
         transform: translateX(0px);
     }

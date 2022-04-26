@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
   export default {
     data () {
       return {
@@ -31,6 +33,7 @@
         default: String
     },
     methods: {
+      ...mapActions(['sortCards']),
       closeDropdown() {
         this.dropDownIsOpen = false;
       },
@@ -43,6 +46,12 @@
       onSelected(option) {
           console.log(option);
           this.selected = option
+          const direction = option.indexOf('возрастанию') !== -1  ? 'asc' : 'desc'
+          const type = option.indexOf('Цена') !== -1 ? 'price' : option.indexOf('Название') !== -1 ? 'name' : 'default'
+          console.log({direction, type})
+          // console.log('option.indexOf', option.indexOf('возрастанию'))
+          this.sortCards({direction, type})
+          // this.sort({direction, type})
       },
     },
     mounted() {
@@ -57,8 +66,7 @@
 <style scoped lang="scss">
 .dropdown {
   position: relative;
-  width: 140px;
-  height: 36px;
+  width: 200px;
   margin-bottom: 20px;
   @include borderShadow;
 

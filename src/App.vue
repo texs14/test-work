@@ -4,7 +4,9 @@
       <FormAdding />
     </aside>
     <section class="content-wrapper">
-      <DropDownSelect :options="['По умолчанию','По возрастанию', 'По убыванию']" default="По умолчанию"/>
+      <DropDownSelect 
+        :options="['По умолчанию','Цена (По возрастанию)', 'Цена (По убыванию)','Название (По возрастанию)', 'Название (По убыванию)']" 
+        default="По умолчанию"/>
       <CardList />
     </section>
   </main>
@@ -22,11 +24,6 @@ export default {
     FormAdding,
     DropDownSelect
   },
-  data() {
-    return {
-
-    }
-  }
 }
 </script>
 
@@ -58,12 +55,15 @@ export default {
     display: flex;
     max-width: fit-content;
     column-gap: 16px;
+    max-width: 1380px;
+    width: 100%;
 
     @include smallScreen{
       flex-direction: column;
     }
 
     .sidebar-left {
+      margin-right: auto;
       @include smallScreen{
 
       }
@@ -73,6 +73,7 @@ export default {
 
 <style lang="scss">
 .content-wrapper {
+  width: 100%;
   .cards-list {
     margin-top: 20px;
   }
