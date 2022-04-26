@@ -44,14 +44,10 @@ import {mapActions} from 'vuex'
         this.dropDownIsOpen = !this.dropDownIsOpen;
       },
       onSelected(option) {
-          console.log(option);
           this.selected = option
           const direction = option.indexOf('возрастанию') !== -1  ? 'asc' : 'desc'
           const type = option.indexOf('Цена') !== -1 ? 'price' : option.indexOf('Название') !== -1 ? 'name' : 'default'
-          console.log({direction, type})
-          // console.log('option.indexOf', option.indexOf('возрастанию'))
           this.sortCards({direction, type})
-          // this.sort({direction, type})
       },
     },
     mounted() {
