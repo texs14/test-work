@@ -1,6 +1,6 @@
-# test-work-idaproject
+# test-work
 
-## Тестовая работа idaproject
+## Тестовая работа
 
 Выполнена на коробочной версии Vue-CLI. Добавлен vuex
 
