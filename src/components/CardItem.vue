@@ -33,24 +33,30 @@ export default {
     }
 
     .card {
-        width: 332px;
+        flex-grow: 1;
+        flex-shrink: 0;
         position: relative;
         @include borderShadow;
         transition: all .35s ease;
 
-        @include extraSmallScreen{
-            width: 320px;
-            max-width: 320px;
-            margin: auto;
+        @include ultraSmallScreen{
+            // width: 320px;
+            // max-width: 320px;
+            // margin: auto;
         }
 
         &__image {
+            object-fit: cover;
             width: 100%;
             height: 200px;
         }
 
         &__info-block {
+            display: flex;
+            flex-direction: column;
+
             padding: 16px 16px 24px;
+            height: calc(100% - 240px);
         }
 
         &__title {
@@ -73,9 +79,16 @@ export default {
             line-height: 20px;
 
             color: #3F3F3F;
+
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         &__price {
+            margin-top: auto;
             font-weight: 600;
             font-size: 24px;
             line-height: 30px;

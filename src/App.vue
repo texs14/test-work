@@ -45,8 +45,8 @@ export default {
       padding: 8px;
     }
 
-    @include extraSmallScreen{
-      padding: 10px 0;
+    @include ultraSmallScreen{
+      padding: 0 10px;
     }
   }
 
