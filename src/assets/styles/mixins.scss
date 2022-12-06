@@ -24,7 +24,13 @@
 }
 
 @mixin extraSmallScreen {
-    @media screen and (max-width: 360px){
+    @media screen and (max-width: 768px){
+        @content;
+    }
+}
+
+@mixin ultraSmallScreen {
+    @media screen and (max-width: 520px){
         @content;
     }
 }

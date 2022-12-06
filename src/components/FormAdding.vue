@@ -162,7 +162,7 @@ export default {
         margin-bottom: 16px;
         margin-top: 0;
 
-        @include extraSmallScreen{
+        @include ultraSmallScreen{
             width: 320px;
             max-width: 320px;
             margin-left: 12px;
